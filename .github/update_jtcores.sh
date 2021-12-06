@@ -56,7 +56,13 @@ update_jtcores() {
     popd
     popd
 
-    rm -rf $(grep -lR 'jtbeta.zip' "${OUTPUT_FOLDER}/_Arcade/")
+    echo
+    IFS=$'\n'
+    for mra in $(grep -lR 'jtbeta.zip' "${OUTPUT_FOLDER}/_Arcade/") ; do
+        echo "Removing: ${mra}";
+        rm "${mra}"
+    done
+    echo
 
     if [[ "${PUSH_COMMAND}" == "--push" ]] ; then
         git checkout -f develop -b main
