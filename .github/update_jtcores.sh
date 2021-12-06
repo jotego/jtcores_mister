@@ -56,6 +56,8 @@ update_jtcores() {
     popd
     popd
 
+    rm -rf $(grep -lR 'jtbeta.zip' "${OUTPUT_FOLDER}/_Arcade/")
+
     if [[ "${PUSH_COMMAND}" == "--push" ]] ; then
         git checkout -f develop -b main
         echo "Running detox"
