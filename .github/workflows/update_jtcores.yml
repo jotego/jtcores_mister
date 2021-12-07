@@ -1,8 +1,6 @@
 name: update jtcores
 
 on:
-  schedule:
-  - cron:  "*/20 * * * *"
   workflow_dispatch:
 
 jobs:
