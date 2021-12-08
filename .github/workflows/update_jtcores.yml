@@ -25,4 +25,4 @@ jobs:
         DB_ID: jtcores
         DB_URL: https://raw.githubusercontent.com/jotego/jtcores_mister/main/jtbindb.json.zip
         BASE_FILES_URL: https://raw.githubusercontent.com/jotego/jtcores_mister/%s/
-        LATEST_ZIP_URL: https://github.com/jotego/jtcores_mister/archive/refs/heads/jtbin.zip
+        LATEST_ZIP_URL: https://github.com/jotego/jtcores_mister/archive/refs/heads/main.zip
