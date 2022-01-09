@@ -31,3 +31,7 @@ db_url = https://raw.githubusercontent.com/jotego/jtcores_mister/main/jtbindb.js
 
 These cores are also available for MiST, SiDi, NeptUNO, MultiCore and MultiCore 2+. For these platforms check the [JTBIN](https://github.com/jotego/jtbin) repository.
 
+
+#### List of Tags that you may use with the Downloader Filters
+
+ALL_TAGS_GO_HERE
