@@ -27,7 +27,7 @@ db_url = https://raw.githubusercontent.com/jotego/jtcores_mister/main/jtbindb.js
 
 ```
 
-#### List of Tags that you may use with the Downloader Filters
+#### List of Tags that you may use with the Downloader Filters:
 
 ALL_TAGS_GO_HERE
 
