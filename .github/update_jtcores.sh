@@ -72,12 +72,8 @@ update_jtcores() {
         git add "${OUTPUT_FOLDER}"
         git commit -m "-"
         git fetch origin main || true
-        if ! git diff --quiet main origin/main^ ; then
-            echo "Calculating db..."
-            /tmp/calculate_db.py
-        else
-            echo "Nothing to be updated."
-        fi
+        echo "Calculating db..."
+        /tmp/calculate_db.py
     fi
 
     rm -rf "${TMP_FOLDER}"
