@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copyright (c) 2021 José Manuel Barroso Galindo <theypsilon@gmail.com>
+# Copyright (c) 2021-2022 José Manuel Barroso Galindo <theypsilon@gmail.com>
 
 set -euo pipefail
 
@@ -15,9 +15,12 @@ update_jtcores() {
     local OUTPUT_FOLDER="$(cd ${1} ; pwd)"
     local PUSH_COMMAND="${2:-}"
 
+    # get list of cores from the wiki
     fetch_core_urls
 
     local TMP_FOLDER="$(mktemp -d)"
+    
+    # checkout jtbin repository in tmp folder
     download_repository "${TMP_FOLDER}" "https://github.com/jotego/jtbin.git" "master"
 
     mkdir -p "${OUTPUT_FOLDER}/_Arcade/cores/"
@@ -32,6 +35,7 @@ update_jtcores() {
                 continue
             fi
 
+            # for each core it copies the RBF file to _Arcade/cores/
             echo copy_file "${TMP_FOLDER}/${folder}/releases/${LAST_RELEASE_FILE}" "${OUTPUT_FOLDER}/_Arcade/cores/$(basename ${LAST_RELEASE_FILE})"
             copy_file "${TMP_FOLDER}/${folder}/releases/${LAST_RELEASE_FILE}" "${OUTPUT_FOLDER}/_Arcade/cores/$(basename ${LAST_RELEASE_FILE})"
         done
@@ -41,6 +45,7 @@ update_jtcores() {
 
     pushd ${TMP_FOLDER}
 
+    # we copy each MRA not in _alternatives to _Arcade/  *Assumption: all MRA files with the same name must be identical and compatible with MiSTer
     for mra in $(find mra -type f -iname '*.mra' -not -path "*/_alternatives/*") ; do
         echo copy_file "${mra}" "${OUTPUT_FOLDER}/_Arcade/$(basename ${mra})"
         copy_file "${mra}" "${OUTPUT_FOLDER}/_Arcade/$(basename ${mra})"
@@ -48,6 +53,7 @@ update_jtcores() {
 
     pushd mra
 
+    # we copy each MRA in _alternatives to _Arcade/_alternatives keeping same tree folder structure
     for alts in $(find _alternatives/ -type f -iname '*.mra') ; do
         echo copy_file "${alts}" "${OUTPUT_FOLDER}/_Arcade/${alts}"
         copy_file "${alts}" "${OUTPUT_FOLDER}/_Arcade/${alts}"
