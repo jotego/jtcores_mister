@@ -45,7 +45,9 @@ update_jtcores() {
 
     pushd ${TMP_FOLDER}
 
-    # we copy each MRA not in _alternatives to _Arcade/  *Assumption: all MRA files with the same name must be identical and compatible with MiSTer
+    # we copy each MRA not in _alternatives to _Arcade/
+    #  * Assumption 1: all MRA files with the same name must be identical
+    #  * Assumption 2: all MRA files must be compatible with MiSTer
     for mra in $(find mra -type f -iname '*.mra' -not -path "*/_alternatives/*") ; do
         echo copy_file "${mra}" "${OUTPUT_FOLDER}/_Arcade/$(basename ${mra})"
         copy_file "${mra}" "${OUTPUT_FOLDER}/_Arcade/$(basename ${mra})"
@@ -54,6 +56,7 @@ update_jtcores() {
     pushd mra
 
     # we copy each MRA in _alternatives to _Arcade/_alternatives keeping same tree folder structure
+    #  * Assumption: all MRA alternatives must be compatible with MiSTer
     for alts in $(find _alternatives/ -type f -iname '*.mra') ; do
         echo copy_file "${alts}" "${OUTPUT_FOLDER}/_Arcade/${alts}"
         copy_file "${alts}" "${OUTPUT_FOLDER}/_Arcade/${alts}"
