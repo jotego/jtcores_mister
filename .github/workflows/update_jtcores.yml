@@ -3,6 +3,8 @@ name: update jtcores
 on:
   workflow_dispatch:
 
+permissions: write-all
+
 jobs:
   build:
     runs-on: ubuntu-20.04
