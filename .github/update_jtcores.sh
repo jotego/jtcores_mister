@@ -28,11 +28,10 @@ update_jtcores() {
     for folder in $(echo "${CORE_URLS[@]}" | sed -n -e 's%^.*tree/master/%%p') ; do
 
         for bin in $(files_with_no_date "${TMP_FOLDER}/${folder}/releases" | uniq) ; do
-            echo "bin ${bin}"
-            get_latest_release "${TMP_FOLDER}/${folder}" "${bin}"
-            local LAST_RELEASE_FILE="${GET_LATEST_RELEASE_RET}"
-
-            if is_not_rbf_release "${LAST_RELEASE_FILE}" ; then
+            local LAST_RELEASE_FILE="${bin}.rbf"
+            
+            if [ ! -f "${TMP_FOLDER}/${folder}/releases/${LAST_RELEASE_FILE}" ] ; then
+                echo "Not found ${LAST_RELEASE_FILE}"
                 continue
             fi
 
