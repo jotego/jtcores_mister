@@ -25,6 +25,8 @@ update_jtcores() {
 
     mkdir -p "${OUTPUT_FOLDER}/_Arcade/cores/"
 
+    local IFS=$'\n'
+
     for folder in $(echo "${CORE_URLS[@]}" | sed -n -e 's%^.*tree/master/%%p') ; do
 
         for bin in $(files_with_no_date "${TMP_FOLDER}/${folder}/releases") ; do
@@ -40,8 +42,6 @@ update_jtcores() {
             copy_file "${TMP_FOLDER}/${folder}/releases/${LAST_RELEASE_FILE}" "${OUTPUT_FOLDER}/_Arcade/cores/$(basename ${LAST_RELEASE_FILE})"
         done
     done
-
-    local IFS=$'\n'
 
     pushd ${TMP_FOLDER}
 
