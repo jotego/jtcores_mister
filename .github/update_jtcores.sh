@@ -21,13 +21,13 @@ update_jtcores() {
     local TMP_FOLDER="$(mktemp -d)"
     
     # checkout jtbin repository in tmp folder
-    download_repository "${TMP_FOLDER}" "https://github.com/jotego/jtbin.git" "master"
+    download_repository "${TMP_FOLDER}" "https://github.com/jtfpga/temp.git" "master"
 
     mkdir -p "${OUTPUT_FOLDER}/_Arcade/cores/"
 
     for folder in $(echo "${CORE_URLS[@]}" | sed -n -e 's%^.*tree/master/%%p') ; do
 
-        for bin in $(files_with_stripped_date "${TMP_FOLDER}/${folder}/releases" | uniq) ; do
+        for bin in $(files_with_no_date "${TMP_FOLDER}/${folder}/releases" | uniq) ; do
             get_latest_release "${TMP_FOLDER}/${folder}" "${bin}"
             local LAST_RELEASE_FILE="${GET_LATEST_RELEASE_RET}"
 
