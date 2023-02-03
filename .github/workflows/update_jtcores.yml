@@ -3,8 +3,6 @@ name: update jtcores
 on:
   workflow_dispatch:
 
-permissions: write-all
-
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -25,6 +23,6 @@ jobs:
         ./.github/update_jtcores.sh . --push
       env:
         DB_ID: jtcores
-        DB_URL: https://raw.githubusercontent.com/theypsilon/jtcores_mister/main/jtbindb.json.zip
-        BASE_FILES_URL: https://raw.githubusercontent.com/theypsilon/jtcores_mister/%s/
-        LATEST_ZIP_URL: https://github.com/theypsilon/jtcores_mister/archive/refs/heads/main.zip
+        DB_URL: https://raw.githubusercontent.com/jotego/jtcores_mister/main/jtbindb.json.zip
+        BASE_FILES_URL: https://raw.githubusercontent.com/jotego/jtcores_mister/%s/
+        LATEST_ZIP_URL: https://github.com/jotego/jtcores_mister/archive/refs/heads/main.zip
