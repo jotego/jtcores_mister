@@ -21,7 +21,7 @@ update_jtcores() {
     local TMP_FOLDER="$(mktemp -d)"
     
     # checkout jtbin repository in tmp folder
-    download_repository "${TMP_FOLDER}" "https://github.com/jtfpga/temp.git" "master"
+    download_repository "${TMP_FOLDER}" "https://github.com/jotego/jtbin.git" "master"
 
     mkdir -p "${OUTPUT_FOLDER}/_Arcade/cores/"
 
