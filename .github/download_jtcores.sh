@@ -1,22 +1,14 @@
 #!/usr/bin/env bash
-# Copyright (c) 2021-2022 José Manuel Barroso Galindo <theypsilon@gmail.com>
+# Copyright (c) 2023 José Manuel Barroso Galindo <theypsilon@gmail.com>
 
 set -euo pipefail
 
-curl -o /tmp/update_distribution.source "https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/develop/.github/update_distribution.sh"
-
-source /tmp/update_distribution.source
-rm /tmp/update_distribution.source
-
-curl -o /tmp/calculate_db.py "https://raw.githubusercontent.com/MiSTer-devel/Distribution_MiSTer/develop/.github/calculate_db.py"
-chmod +x /tmp/calculate_db.py
-
-update_jtcores() {
+download_jtcores() {
     local OUTPUT_FOLDER="$(cd ${1} ; pwd)"
-    local PUSH_COMMAND="${2:-}"
+    echo "OUTPUT_FOLDER=${OUTPUT_FOLDER}"
 
     # get list of cores from the wiki
-    fetch_core_urls
+    local CORE_URLS=$(curl -sSLf "https://github.com/jotego/jtbin/wiki"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -ioE "https://github.com/jotego/jtbin/tree/[a-zA-Z0-9./_-]*")
 
     local TMP_FOLDER="$(mktemp -d)"
     
@@ -67,33 +59,64 @@ update_jtcores() {
     popd
     popd
 
-    echo
-    IFS=$'\n'
-    for mra in $(grep -lR 'jtbeta.zip' "${OUTPUT_FOLDER}/_Arcade/") ; do
-        echo "Removing: ${mra}";
-        rm "${mra}"
-    done
-    echo
-
-    if [[ "${PUSH_COMMAND}" == "--push" ]] ; then
-        git checkout -f develop -b main
-        echo "Running detox"
-        detox -v -s utf_8-only -r *
-        echo "Detox done"
-        git add "${OUTPUT_FOLDER}"
-        git commit -m "-"
-        git fetch origin main || true
-        echo "Calculating db..."
-        /tmp/calculate_db.py
-    fi
-
     rm -rf "${TMP_FOLDER}"
 }
 
-fetch_core_urls() {
-    CORE_URLS=$(curl -sSLf "https://github.com/jotego/jtbin/wiki"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -ioE "https://github.com/jotego/jtbin/tree/[a-zA-Z0-9./_-]*")
+download_repository() {
+    local FOLDER="${1}"
+    local GIT_URL="${2}"
+    local BRANCH="${3}"
+    pushd "${TMP_FOLDER}" > /dev/null 2>&1
+    git init -q
+    git remote add origin "${GIT_URL}"
+    git -c protocol.version=2 fetch --depth=1 -q --no-tags --prune --no-recurse-submodules origin "${BRANCH}"
+    git checkout -qf FETCH_HEAD
+    popd > /dev/null 2>&1
+}
+
+copy_file() {
+    local SOURCE="${1}"
+    local TARGET="${2}"
+
+    mkdir -p "${TARGET%/*}"
+    cp -r "${SOURCE}" "${TARGET}"
+}
+
+is_not_rbf_release() {
+    is_not_file_extension "${1}" "rbf"
+}
+
+is_not_file_extension() {
+    local INPUT_FILE="${1}"
+    local EXPECTED_EXTENSION="${2}"
+    if is_file_extension "${INPUT_FILE}" "${EXPECTED_EXTENSION}" ; then
+        return 1
+    fi
+    >&2 echo "${INPUT_FILE} is NOT a ${EXPECTED_EXTENSION^^} file."
+    return 0
+}
+
+is_file_extension() {
+    local INPUT_FILE="${1}"
+    local EXPECTED_EXTENSION="${2}"
+    local ACTUAL_EXTENSION="${INPUT_FILE#*.}"
+    if [[ "${INPUT_FILE}" == "" ]] || [[ "${ACTUAL_EXTENSION,,}" != "${EXPECTED_EXTENSION,,}" ]] ; then
+        return 1
+    fi
+    return 0
+}
+
+files_with_no_date() {
+    local FOLDER="${1}"
+    pushd "${FOLDER}" > /dev/null 2>&1
+    for file in *; do
+        if ! [[ "${file}" =~ ^.+_([0-9]{8})(\..+)?$ ]] ; then
+            echo "${file}"
+        fi
+    done
+    popd > /dev/null 2>&1
 }
 
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] ; then
-    update_jtcores "${1}" "${2:-}"
+    download_jtcores "${1}"
 fi
