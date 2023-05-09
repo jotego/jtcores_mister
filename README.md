@@ -9,7 +9,7 @@ Please support Jotego's work:
 * Paypal: https://paypal.me/topapate
 * Github: https://github.com/sponsors/jotego
 
-Downloader development by theypsilon (get him a [Ko-fi](https://ko-fi.com/theypsilon))
+Downloader development by theypsilon (support him on [Patreon](https://www.patreon.com/theypsilon))
 
 ## Download
 
