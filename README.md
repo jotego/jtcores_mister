@@ -17,14 +17,26 @@ You may download all of them at once as a zip through the [following link](https
 
 The source code for these files is kept in independent repositories [here](https://github.com/jotego).
 
-### MiSTer Downloader Configuration
+### Install all the files with Update All for MiSTer
 
-The [Downloader](https://github.com/MiSTer-devel/Downloader_MiSTer) tool can be configured for downloading all these files directly from your MiSTer. If you are not getting the files automatically, add manually this database to `/media/fat/downloader.ini`. Add these lines to the end of the file:
+[Update All](https://github.com/theypsilon/Update_All_MiSTer) will, by default, install all these files directly from your MiSTer. To also install the premium betas, open the Setting Screen that you can access by pressing up during Update All's countdown, and activate the premium option under JTCORES menu.
+
+### Manual MiSTer Downloader Configuration
+
+The [Downloader](https://github.com/MiSTer-devel/Downloader_MiSTer) tool can be configured for downloading all these files too. If you are not getting the files automatically, add manually this database to `/media/fat/downloader.ini`. Add these lines to the end of the file:
 
 ```ini
 [jtcores]
 db_url = https://raw.githubusercontent.com/jotego/jtcores_mister/main/jtbindb.json.zip
 
+```
+
+By default it won't include premium betas. To also include the premium betas, add the following filter to it:
+
+```ini
+[jtcores]
+db_url = https://raw.githubusercontent.com/jotego/jtcores_mister/main/jtbindb.json.zip
+filter = [mister]
 ```
 
 #### List of Tags that you may use with the Downloader Filters:
