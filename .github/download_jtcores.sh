@@ -7,57 +7,16 @@ download_jtcores() {
     local OUTPUT_FOLDER="$(cd ${1} ; pwd)"
     echo "OUTPUT_FOLDER=${OUTPUT_FOLDER}"
 
-    # get list of cores from the wiki
-    local CORE_URLS=$(curl -sSLf "https://github.com/jotego/jtbin/wiki"| awk '/Arcade-Cores-Top/,/Arcade-Cores-Bottom/' | grep -ioE "https://github.com/jotego/jtbin/tree/[a-zA-Z0-9./_-]*")
-
     local TMP_FOLDER="$(mktemp -d)"
-    
+
     # checkout jtbin repository in tmp folder
     download_repository "${TMP_FOLDER}" "https://github.com/jotego/jtbin.git" "master"
 
     mkdir -p "${OUTPUT_FOLDER}/_Arcade/cores/"
 
     local IFS=$'\n'
-
-    for folder in $(echo "${CORE_URLS[@]}" | sed -n -e 's%^.*tree/master/%%p') ; do
-
-        for bin in $(files_with_no_date "${TMP_FOLDER}/${folder}/releases") ; do
-            local LAST_RELEASE_FILE="${bin}"
-            if is_not_rbf_release "${LAST_RELEASE_FILE}" ; then
-                continue
-            fi
-            if [ ! -f "${TMP_FOLDER}/${folder}/releases/${LAST_RELEASE_FILE}" ] ; then
-                echo "Not found ${TMP_FOLDER}/${folder}/releases/${LAST_RELEASE_FILE}"
-                continue
-            fi
-
-            # for each core it copies the RBF file to _Arcade/cores/
-            echo copy_file "${TMP_FOLDER}/${folder}/releases/${LAST_RELEASE_FILE}" "${OUTPUT_FOLDER}/_Arcade/cores/$(basename ${LAST_RELEASE_FILE})"
-            copy_file "${TMP_FOLDER}/${folder}/releases/${LAST_RELEASE_FILE}" "${OUTPUT_FOLDER}/_Arcade/cores/$(basename ${LAST_RELEASE_FILE})"
-        done
-    done
-
-    pushd ${TMP_FOLDER}
-
-    # we copy each MRA not in _alternatives to _Arcade/
-    #  * Assumption 1: all MRA files with the same name must be identical
-    #  * Assumption 2: all MRA files must be compatible with MiSTer
-    for mra in $(find mra -type f -iname '*.mra' -not -path "*/_alternatives/*") ; do
-        echo copy_file "${mra}" "${OUTPUT_FOLDER}/_Arcade/$(basename ${mra})"
-        copy_file "${mra}" "${OUTPUT_FOLDER}/_Arcade/$(basename ${mra})"
-    done
-
-    pushd mra
-
-    # we copy each MRA in _alternatives to _Arcade/_alternatives keeping same tree folder structure
-    #  * Assumption: all MRA alternatives must be compatible with MiSTer
-    for alts in $(find _alternatives/ -type f -iname '*.mra') ; do
-        echo copy_file "${alts}" "${OUTPUT_FOLDER}/_Arcade/${alts}"
-        copy_file "${alts}" "${OUTPUT_FOLDER}/_Arcade/${alts}"
-    done
-
-    popd
-    popd
+    cp ${TMP_FOLDER}/mister/* "${OUTPUT_FOLDER}/_Arcade/cores/"
+    cp -r ${TMP_FOLDER}/mra/* "${OUTPUT_FOLDER}/_Arcade/"
 
     rm -rf "${TMP_FOLDER}"
 }
