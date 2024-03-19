@@ -18,6 +18,10 @@ download_jtcores() {
     cp ${TMP_FOLDER}/mister/* "${OUTPUT_FOLDER}/_Arcade/cores/"
     cp -r ${TMP_FOLDER}/mra/* "${OUTPUT_FOLDER}/_Arcade/"
 
+    # These two lines is for the NeoGeo Pocket games folder
+    mkdir -p "${OUTPUT_FOLDER}/games/JTNGP/"
+    touch "${OUTPUT_FOLDER}/games/JTNGP/.delme"
+
     rm -rf "${TMP_FOLDER}"
 }
 
