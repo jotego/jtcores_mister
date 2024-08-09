@@ -41,7 +41,7 @@ filter = [mister]
 
 #### List of Tags that you may use with the Downloader Filters:
 
-ALL_TAGS_GO_HERE
+`alternatives`, `arcade`, `arcade-cores`, `arcade-jt1942`, `arcade-jt1943`, `arcade-jtaliens`, `arcade-jtbiocom`, `arcade-jtbtiger`, `arcade-jtbubl`, `arcade-jtcastle`, `arcade-jtcommnd`, `arcade-jtcomsc`, `arcade-jtcontra`, `arcade-jtcop`, `arcade-jtcps1`, `arcade-jtcps15`, `arcade-jtcps2`, `arcade-jtdd`, `arcade-jtdd2`, `arcade-jtexed`, `arcade-jtflane`, `arcade-jtfround`, `arcade-jtgng`, `arcade-jtgunsmk`, `arcade-jtkarnov`, `arcade-jtkchamp`, `arcade-jtkicker`, `arcade-jtkiwi`, `arcade-jtkunio`, `arcade-jtlabrun`, `arcade-jtmidres`, `arcade-jtmikie`, `arcade-jtmx5k`, `arcade-jtngp`, `arcade-jtninja`, `arcade-jtoutrun`, `arcade-jtpang`, `arcade-jtpinpon`, `arcade-jtrastan`, `arcade-jtriders`, `arcade-jtroadf`, `arcade-jtroc`, `arcade-jtrumble`, `arcade-jts16`, `arcade-jts16b`, `arcade-jts18`, `arcade-jtsarms`, `arcade-jtsbaskt`, `arcade-jtsectnz`, `arcade-jtsf`, `arcade-jtshanon`, `arcade-jtshouse`, `arcade-jtsimson`, `arcade-jtslyspy`, `arcade-jttmnt`, `arcade-jttoki`, `arcade-jttora`, `arcade-jttrack`, `arcade-jttrojan`, `arcade-jtvigil`, `arcade-jtyiear`, `cores`, `games`, `jtngp`, `mra`
 
 ### Other Platforms
 
