@@ -13,14 +13,16 @@ download_jtcores() {
     download_repository "${TMP_FOLDER}" "https://github.com/jotego/jtbin.git" "master"
 
     mkdir -p "${OUTPUT_FOLDER}/_Arcade/cores/"
+    mkdir -p "${OUTPUT_FOLDER}/_Console"
 
     local IFS=$'\n'
-    cp ${TMP_FOLDER}/mister/* "${OUTPUT_FOLDER}/_Arcade/cores/"
+    cp ${TMP_FOLDER}/mister/jt* "${OUTPUT_FOLDER}/_Arcade/cores/"
     cp -r ${TMP_FOLDER}/mra/* "${OUTPUT_FOLDER}/_Arcade/"
+    cp ${TMP_FOLDER}/neogeopocket.rbf "${OUTPUT_FOLDER}/_Console/NeoGeoPocket.rbf"
 
-    # These two lines is for the NeoGeo Pocket games folder
-    mkdir -p "${OUTPUT_FOLDER}/games/JTNGP/"
-    touch "${OUTPUT_FOLDER}/games/JTNGP/.delme"
+    # NeoGeo Pocket games folder
+    mkdir -p "${OUTPUT_FOLDER}/games/NeoGeoPocket/"
+    touch "${OUTPUT_FOLDER}/games/NeoGeoPocket/.delme"
 
     rm -rf "${TMP_FOLDER}"
 }
@@ -37,6 +39,7 @@ download_repository() {
     popd > /dev/null 2>&1
 }
 
+# if the file is not sourced, download the cores
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] ; then
     download_jtcores "${1}"
 fi
