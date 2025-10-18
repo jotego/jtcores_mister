@@ -77,3 +77,26 @@ jobs:
         git add db.json
         git commit -m "-"
         git push --force origin main testing_db
+
+    - name: Track Release Commit
+      if: steps.db_exists.outputs.new_db == 'true'
+      run: |
+        MAIN_COMMIT=$(git rev-parse main)
+        CURRENT_DATE=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        echo "Main branch commit: ${MAIN_COMMIT}"
+        echo "Release date: ${CURRENT_DATE}"
+
+        git fetch origin releases || true
+        if git rev-parse --verify origin/releases >/dev/null 2>&1; then
+          git checkout -f releases
+          git pull origin releases
+        else
+          git checkout --orphan releases
+          git reset --hard
+        fi
+
+        echo "${CURRENT_DATE}: ${MAIN_COMMIT}" >> commits.txt
+
+        git add commits.txt
+        git commit -m "Track main branch release: ${MAIN_COMMIT}"
+        git push origin releases
