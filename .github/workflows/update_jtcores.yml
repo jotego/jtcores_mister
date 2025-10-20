@@ -86,12 +86,12 @@ jobs:
         echo "Main branch commit: ${MAIN_COMMIT}"
         echo "Release date: ${CURRENT_DATE}"
 
-        git fetch origin releases || true
-        if git rev-parse --verify origin/releases >/dev/null 2>&1; then
-          git checkout -f releases
-          git pull origin releases
+        git fetch origin db-releases || true
+        if git rev-parse --verify origin/db-releases >/dev/null 2>&1; then
+          git checkout -f db-releases
+          git pull origin db-releases
         else
-          git checkout --orphan releases
+          git checkout --orphan db-releases
           git reset --hard
         fi
 
@@ -99,4 +99,4 @@ jobs:
 
         git add commits.txt
         git commit -m "Track main branch release: ${MAIN_COMMIT}"
-        git push origin releases
+        git push origin db-releases
