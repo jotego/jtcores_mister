@@ -19,10 +19,13 @@ download_jtcores() {
     cp ${TMP_FOLDER}/mister/jt* "${OUTPUT_FOLDER}/_Arcade/cores/"
     cp -r ${TMP_FOLDER}/mra/* "${OUTPUT_FOLDER}/_Arcade/"
     cp ${TMP_FOLDER}/mister/neogeopocket.rbf "${OUTPUT_FOLDER}/_Console/NeoGeoPocket.rbf"
+    cp ${TMP_FOLDER}/mister/neogeopocket-color.rbf "${OUTPUT_FOLDER}/_Console/NeoGeoPocket-Color.rbf"
 
-    # NeoGeo Pocket games folder
+    # NeoGeo Pocket games folders
     mkdir -p "${OUTPUT_FOLDER}/games/NeoGeoPocket/"
     touch "${OUTPUT_FOLDER}/games/NeoGeoPocket/.delme"
+    mkdir -p "${OUTPUT_FOLDER}/games/NeoGeoPocket-Color/"
+    touch "${OUTPUT_FOLDER}/games/NeoGeoPocket-Color/.delme"
 
     rm -rf "${TMP_FOLDER}"
 }
