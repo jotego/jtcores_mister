@@ -18,8 +18,6 @@ download_jtcores() {
     local IFS=$'\n'
     cp ${TMP_FOLDER}/mister/jt* "${OUTPUT_FOLDER}/_Arcade/cores/"
     cp -r ${TMP_FOLDER}/mra/* "${OUTPUT_FOLDER}/_Arcade/"
-    cp ${TMP_FOLDER}/mister/neogeopocket.rbf "${OUTPUT_FOLDER}/_Console/NeoGeoPocket.rbf"
-    cp ${TMP_FOLDER}/mister/neogeopocket-color.rbf "${OUTPUT_FOLDER}/_Console/NeoGeoPocket-Color.rbf"
 
     rm -rf "${TMP_FOLDER}"
 }
